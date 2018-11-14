@@ -26,12 +26,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DatabaseReference produtos = referencia.child("produtos");
+
+        Produtos produto = new Produtos();
+        produto.setDescricao("FP789");
+        produto.setMarca("HP");
+        produto.setPreco(3000);
+
+        //Comando push para adicionar identificadores únicos
+        produtos.push().setValue(produto);
 
         //Deslogar usuario
       //  usuario.signOut();
 
         //Para logar usuario
-        usuario.signInWithEmailAndPassword("popo@gmail.com", "123456789")
+       /* usuario.signInWithEmailAndPassword("popo@gmail.com", "123456789")
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -45,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
+*/
 
 
 
