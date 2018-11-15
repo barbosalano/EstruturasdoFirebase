@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,18 +27,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseReference produtos = referencia.child("produtos");
+        DatabaseReference usuarios = referencia.child("usuarios");
 
-        Produtos produto = new Produtos();
-        produto.setDescricao("FP789");
-        produto.setMarca("HP");
-        produto.setPreco(3000);
+
+       // DatabaseReference usuarioPesquisa = usuarios.child("-LRMHyxec3jmtCwzlAlk");
+
+        //Pesquisa utilizando Query
+       // Query usuarioPesquisa = usuarios.orderByChild("nome").equalTo("Luciano");
+        //Query usuarioPesquisa = usuarios.orderByKey().limitToFirst(2);
+        Query usuarioPesquisa = usuarios.orderByKey().limitToLast(2);
+
+
+        usuarioPesquisa.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //ex: Uma opção de recuperar as informações
+                //Usuario dadosUsuario = dataSnapshot.getValue(Usuario.class);
+                // Log.i("usuarios: ", "nome: " + dadosUsuario.getNome());
+
+                Log.i("usuarios: ", dataSnapshot.getValue().toString());
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        /*Usuario usuario = new Usuario();
+        usuario.setNome("Marcelo");
+        usuario.setSobrenome("Cesar");
+        usuario.setIdade("29");
 
         //Comando push para adicionar identificadores únicos
-        produtos.push().setValue(produto);
+        usuarios.push().setValue(usuario); */
 
         //Deslogar usuario
-      //  usuario.signOut();
+        //  usuario.signOut();
 
         //Para logar usuario
        /* usuario.signInWithEmailAndPassword("popo@gmail.com", "123456789")
